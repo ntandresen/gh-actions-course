@@ -39,3 +39,7 @@ jobs:
         run: |
           echo "Output 1: ${{ needs.build.outputs.output1 }}"
           echo "Output 2: ${{ needs.build.outputs.output2 }}"
+      - name: Step with mistake
+        run: |
+          echo "mistake=true" > $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
