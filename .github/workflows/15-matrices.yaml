@@ -51,6 +51,14 @@ jobs:
           - shape: circle
             opacity: 100
           - opacity: 50
+          - color: green
+            shape: circle
+            size: medium
+        exclude:
+          # Processed before `include`
+          # Partial matches are valid within the `exclude` key
+          - color: green
+            shape: circle
     steps:
       - name: Dummy
         run: echo "${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}"
