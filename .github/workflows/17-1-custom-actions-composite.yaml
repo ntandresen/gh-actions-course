@@ -9,6 +9,7 @@ on:
         options:
           - dev
           - prod
+        default: dev
 env:
   working-directory: 17-custom-actions/react-app
 jobs:
@@ -24,6 +25,7 @@ jobs:
         with:
           node-version: 20.x
           working-dir: ${{ env.working-directory }}
+          target-env: ${{ inputs.target-env }}
       - name: Test
         run: npm run test
       - name: Build
