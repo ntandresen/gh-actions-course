@@ -26,15 +26,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ github.event.inputs.node-version }}
       - name: Calculate cache key
         id: cache-key
         run: |
-          echo "CACHE_KEY=deps-node-moduls-${{ hashFiles('13-caching/react-app/package-lock.json') }}" >> $GITHUB_ENV
+          echo "CACHE_KEY=deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}" >> "$GITHUB_OUTPUT"
       - name: Download cached dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         if: ${{ inputs.use-cache }}
         id: cache
         with:
@@ -53,11 +53,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ github.event.inputs.node-version }}
       - name: Download cached dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         if: ${{ inputs.use-cache }}
         id: cache
         with:
@@ -77,11 +77,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ github.event.inputs.node-version }}
       - name: Download cached dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         if: ${{ inputs.use-cache }}
         id: cache
         with:
