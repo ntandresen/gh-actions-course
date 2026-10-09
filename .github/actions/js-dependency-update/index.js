@@ -15,6 +15,9 @@ const setupLogger = ({ debug, prefix } = { debug: false, prefix: '' }) => ({
             core.info(`DEBUG ${prefix}${prefix? ' : ' : ''}${message}`);
         }
     },
+    info: (message) => {
+        core.info(`${prefix}${prefix? ' : ' : ''}${message}`);
+    },
     error: (message) => {
         core.error(`${prefix}${prefix? ' : ' : ''}${message}`);
     }
@@ -72,8 +75,10 @@ async function run() {
         await exec.exec(`git commit -m "chore: update dependencies"`, [], { ...commonExecOpts });
         await exec.exec(`git push -u origin ${headBranch} --force`, [], { ...commonExecOpts });
 
+        logger.info(`Fetching octokit API`);
         const octokit = github.getOctokit(ghToken);
         try {
+            logger.info(`Creating PR from ${headBranch} to ${baseBranch}`);
             await octokit.rest.pulls.create({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
@@ -85,7 +90,7 @@ async function run() {
         } catch (e) {
             logger.error(`Failed to create PR: ${e.message}`);
             core.setFailed();
-            core.error(e);
+            logger.error(e);
         }
     } else {
         logger.info(`No updates available`);
