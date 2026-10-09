@@ -1,5 +1,24 @@
 name: Update NPM Dependencies
 description: Checks if there are updates for NPM dependencies and updates them if necessary and creates a pull request with the changes.
+inputs:
+  base-branch:
+    description: The branch used as the base for the dependency update checks
+    default: main
+    required: false
+  target-branch:
+    description: The branch from which the PR is created
+    default: update-dependencies
+    required: false
+  working-directory:
+    description: The working directory of the project to check for dependency updates
+    required: true
+  gh-token:
+    description: Authentication token for GitHub API requests. Must have write access to contents and pull-requests.
+    required: true
+  debug:
+    description: Enable debug logging
+    default: false
+    required: false
 runs:
   using: node24
   main: index.js
