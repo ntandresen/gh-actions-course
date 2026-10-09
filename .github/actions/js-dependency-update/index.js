@@ -65,20 +65,20 @@ async function run() {
     const gitStatus = await exec.getExecOutput('git status -s package*.json', [], { ...commonExecOpts });
 
     if (gitStatus.stdout.length > 0) {
-        logger.info(`There are updates available`);
-        logger.info(`Setting up git`);
+        logger.debug(`There are updates available`);
+        logger.debug(`Setting up git`);
         await setupGit();
         
-        logger.info(`Committing and pushing changes to ${headBranch}`);
+        logger.debug(`Committing and pushing changes to ${headBranch}`);
         await exec.exec(`git checkout -b ${headBranch}`, [], { ...commonExecOpts });
         await exec.exec(`git add package.json package-lock.json`, [], { ...commonExecOpts });
         await exec.exec(`git commit -m "chore: update dependencies"`, [], { ...commonExecOpts });
         await exec.exec(`git push -u origin ${headBranch} --force`, [], { ...commonExecOpts });
 
-        logger.info(`Fetching octokit API`);
+        logger.debug(`Fetching octokit API`);
         const octokit = github.getOctokit(ghToken);
         try {
-            logger.info(`Creating PR from ${headBranch} to ${baseBranch}`);
+            logger.debug(`Creating PR from ${headBranch} to ${baseBranch}`);
             await octokit.rest.pulls.create({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
