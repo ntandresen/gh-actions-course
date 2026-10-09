@@ -1,17 +1,21 @@
 name: 17 - 2 - Custom Actions - JS
-run-name: 17 - 2 - Custom Actions - JS | BB - ${{ github.event.inputs.base-branch }} | TB - ${{ github.event.inputs.target-branch }} | WD - ${{ github.event.inputs.working-directory }}
+run-name: 17 - 2 - Custom Actions - JS | BB - ${{ github.event.inputs.base-branch }} | TB - ${{ github.event.inputs.head-branch }} | WD - ${{ github.event.inputs.working-directory }}
 on:
   workflow_dispatch:
     inputs:
       base-branch:
         description: The branch used as the base for the dependency update checks
         default: main
-      target-branch:
+      head-branch:
         description: The branch from which the PR is created
         default: update-dependencies
       working-directory:
         description: The working directory of the project to check for dependency updates
         default: 17-custom-actions/react-app
+      debug:
+        description: Enable debug logging
+        type: boolean
+        default: false
 permissions:
   contents: write
   pull-requests: write
@@ -24,6 +28,7 @@ jobs:
         uses: ./.github/actions/js-dependency-update
         with:
           base-branch: ${{ github.event.inputs.base-branch }}
-          target-branch: ${{ github.event.inputs.target-branch }}
+          head-branch: ${{ github.event.inputs.head-branch }}
           working-directory: ${{ github.event.inputs.working-directory }}
           gh-token: ${{ secrets.GITHUB_TOKEN }}
+          debug: ${{ github.event.inputs.debug }}
