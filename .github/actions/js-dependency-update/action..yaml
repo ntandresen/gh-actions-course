@@ -1,0 +1,5 @@
+name: Update NPM Dependencies
+description: Checks if there are updates for NPM dependencies and updates them if necessary and creates a pull request with the changes.
+runs:
+  using: node24
+  main: index.js
