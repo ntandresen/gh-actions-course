@@ -4,7 +4,19 @@ on:
     inputs:
       url:
         description: The URL to ping
-        default: https://google.com
+        type: choice
+        options:
+          - https://www.google.com
+          - https://www.superdupernandresen.com
+          - invalid-url-format
+      max_trials:
+        description: The maximum number of trials to attempt
+        required: false
+        default: "10"
+      delay:
+        description: The delay in seconds between each trial
+        required: false
+        default: "5"
 jobs:
   ping-url:
     runs-on: ubuntu-latest
@@ -14,3 +26,5 @@ jobs:
         uses: ./.github/actions/docker-ping-url
         with:
           url: ${{ inputs.url }}
+          max_trials: ${{ inputs.max_trials }}
+          delay: ${{ inputs.delay }}
