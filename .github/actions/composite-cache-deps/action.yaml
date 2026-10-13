@@ -13,6 +13,13 @@ inputs:
     description: '"dev" or "prod". Controls whether dev dependencies are installed'
     default: dev
     required: false
+outputs:
+  installed-deps:
+    description: Whether dependencies were installed or not
+    value: ${{ steps.cache.outputs.cache-hit != 'true' }}
+  random-output:
+    description: A random output to demonstrate how to set outputs in composite actions
+    value: ${{ steps.random-output.outputs.random }}
 runs:
   using: composite
   steps:
